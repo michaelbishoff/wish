@@ -34,12 +34,11 @@ export const firestore = getFirestore(app);
 
 
 function App() {
-  console.log(process.env.REACT_APP_appId)
   const [user] = useAuthState(auth)
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header>
       </header>
       <div>Hello???</div>
       <section>
