@@ -8,7 +8,7 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from "@firebase/firestore"
 
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { useCollectionData } from 'react-firebase-hooks/firestore'
+// import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -28,7 +28,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);
 const auth = getAuth(app)
 export const firestore = getFirestore(app);
 
@@ -64,9 +64,9 @@ function SignOut() {
   )
 }
 
-function Users() {
-  const usersRef = firestore.collection('users');
+// function Users() {
+//   const usersRef = firestore.collection('users');
 
-}
+// }
 
 export default App;
