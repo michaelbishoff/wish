@@ -40,7 +40,7 @@ function App() {
     <div className="App">
       <header>
       </header>
-      <div>Hello???</div>
+      <div>Does this auto deploy</div>
       <section>
         {user ? <SignOut /> : <SignIn />}
       </section>
