@@ -66,7 +66,6 @@ export default function App() {
     <div className="App">
       <header>
       </header>
-      <div className='text-3xl font-bold underline'>Does this auto deploy</div>
       <div>
         {user ? <SignOutAndListUsers user={user} /> : <SignIn />}
       </div>
@@ -80,7 +79,7 @@ function SignIn() {
     signInWithPopup(auth, provider)
   }
   return (
-    <button type="button" className='bg-sky-400' onClick={signInWithGoogle}>Sign in with Google</button>
+    <button type="button" className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' onClick={signInWithGoogle}>Sign in with Google</button>
   )
 }
 
@@ -122,18 +121,23 @@ function Users() {
 
   console.log(users.length)
   return (
-    users.map(user => {
-      return <User key={user.uid} user={user} />
-    })
+    <ul className="divide-y divide-gray-200">
+      {users.map(user => {
+        return <User key={user.uid} user={user} />
+      })}
+    </ul>
   )
 }
 
 function User({ user }) {
   console.log("user:", user)
   return (
-    <div className="bg-sky-700">
-      name: {user.name}
-      email: {user.photoURL}
-    </div>
+    <li className="py-4 flex">
+      <img className="h-10 w-10 rounded-full" src={user.photoURL} alt="" />
+      <div className="ml-3">
+        <p className="text-sm font-medium text-gray-900">{user.name}</p>
+        <p className="text-sm text-gray-500">{user.uid}</p>
+      </div>
+    </li>
   )
 }
