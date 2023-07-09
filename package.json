@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build-css": "tailwindcss -i ./src/index.css -o ./dist/output.css --minify",
     "build": "tsc && vite build",
+    "build-css": "tailwindcss -i ./src/index.css -o ./dist/output.css --minify",
     "watch-css": "tailwindcss -i ./src/index.css -o ./dist/output.css --watch",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
