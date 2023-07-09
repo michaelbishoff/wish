@@ -62,6 +62,7 @@ export default function App() {
     <div className='App'>
       <header></header>
       <div className='flex'>
+        Does this auto deploy?
         {user ? <SignOutAndListUsers user={user} /> : <SignIn />}
       </div>
     </div>
