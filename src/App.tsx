@@ -53,7 +53,6 @@ export default function App() {
   return (
     <div className="App">
       <Header
-        user={user}
         signInAction={signInWithGoogleAction}
         signOutAction={signOutAction}
       />
