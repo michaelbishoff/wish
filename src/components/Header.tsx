@@ -1,14 +1,22 @@
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { auth } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const navigation = [
-  { name: "Families", href: "#" },
-  { name: "Wishes", href: "#" },
+  { name: "Families", href: "families" },
+  { name: "Wishes", href: "wishes" },
 ];
 
-export default function Header() {
+type HeaderProps = {
+  signInAction: () => void;
+  signOutAction: () => void;
+};
+
+export default function Header({ signInAction, signOutAction }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user] = useAuthState(auth);
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
@@ -44,8 +52,18 @@ export default function Header() {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
+          <a
+            onClick={user ? signOutAction : signInAction}
+            href="#"
+            className="text-sm font-semibold leading-6 text-gray-900"
+          >
+            {user ? (
+              <>Sign out</>
+            ) : (
+              <>
+                Log in <span aria-hidden="true">&rarr;</span>
+              </>
+            )}
           </a>
         </div>
       </nav>
@@ -87,10 +105,11 @@ export default function Header() {
               </div>
               <div className="py-6">
                 <a
+                  onClick={user ? signOutAction : signInAction}
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  Log in
+                  {user ? "Sign out" : "Log in"}
                 </a>
               </div>
             </div>

@@ -1,17 +1,8 @@
 import "./App.css";
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged, User } from "firebase/auth";
 import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged,
-} from "firebase/auth";
-import {
-  getFirestore,
   collection,
   doc,
   getDoc,
@@ -20,31 +11,16 @@ import {
   serverTimestamp,
   query,
 } from "@firebase/firestore";
+
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Background from "./components/Background";
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBpkcjg8XFZqOxC0aicfKtDxb9YBJuhQ9s",
-  authDomain: "wish-98ac7.firebaseapp.com",
-  projectId: "wish-98ac7",
-  storageBucket: "wish-98ac7.appspot.com",
-  messagingSenderId: "150671478555",
-  appId: "1:150671478555:web:e62e11e18928ac8ae24dbe",
-  measurementId: "G-3HWX70Y6XT",
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-const auth = getAuth(app);
-const firestore = getFirestore(app);
+import {
+  auth,
+  firestore,
+  signInWithGoogleAction,
+  signOutAction,
+} from "./firebase";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -76,22 +52,22 @@ export default function App() {
 
   return (
     <div className="App">
-      <Header />
+      <Header
+        user={user}
+        signInAction={signInWithGoogleAction}
+        signOutAction={signOutAction}
+      />
       <Background content={<MyContent user={user} />} />
     </div>
   );
 }
 
 function SignIn() {
-  const signInWithGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider);
-  };
   return (
     <button
       type="button"
       className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-      onClick={signInWithGoogle}
+      onClick={signInWithGoogleAction}
     >
       Sign in with Google
     </button>
@@ -108,7 +84,7 @@ function SignOutAndListUsers({ user }: any) {
 }
 
 function SignOut({ user }: any) {
-  return user && <button onClick={() => signOut(auth)}>Sign Out</button>;
+  return user && <button onClick={signOutAction}>Sign Out</button>;
 }
 
 function Users() {
@@ -157,7 +133,11 @@ function User({ user }: any) {
   );
 }
 
-function MyContent({ user }: any) {
+type MyContentProps = {
+  user: User | null | undefined;
+};
+
+function MyContent({ user }: MyContentProps) {
   return (
     <div className="mx-auto max-w-2xl">
       {user ? <SignOutAndListUsers user={user} /> : <LogInHero />}
