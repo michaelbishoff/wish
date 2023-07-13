@@ -3,10 +3,11 @@ import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Link } from "react-router-dom";
 
 const navigation = [
-  { name: "Families", href: "families" },
-  { name: "Wishes", href: "wishes" },
+  { name: "Families", linkTo: "/families" },
+  { name: "Wishes", linkTo: "/wishes" },
 ];
 
 type HeaderProps = {
@@ -25,7 +26,7 @@ export default function Header({ signInAction, signOutAction }: HeaderProps) {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <a href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Wish</span>
             <div className="h-8 w-auto scale-150">🎁</div>
           </a>
@@ -42,13 +43,13 @@ export default function Header({ signInAction, signOutAction }: HeaderProps) {
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
           {navigation.map((item) => (
-            <a
+            <Link
               key={item.name}
-              href={item.href}
+              to={item.linkTo}
               className="text-sm font-semibold leading-6 text-gray-900"
             >
               {item.name}
-            </a>
+            </Link>
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -94,13 +95,13 @@ export default function Header({ signInAction, signOutAction }: HeaderProps) {
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 {navigation.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
+                    to={item.linkTo}
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
               <div className="py-6">
