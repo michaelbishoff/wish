@@ -21,6 +21,9 @@ import {
   signInWithGoogleAction,
   signOutAction,
 } from "./firebase";
+import { Routes, Route, Link } from "react-router-dom";
+import HeroContent from "./components/HeroContent";
+import Wishes from "./components/Wishes";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -56,7 +59,19 @@ export default function App() {
         signInAction={signInWithGoogleAction}
         signOutAction={signOutAction}
       />
-      <Background content={<MyContent user={user} />} />
+      <Background
+        content={
+          <Routes>
+            <Route index element={<MyContent user={user} />} />
+            <Route
+              path="families"
+              element={<div className="bold">HELLOOO</div>}
+            />
+            <Route path="wishes" element={<Wishes />} />
+            <Route path="*" element={<HeroContent heroText="404" />} />
+          </Routes>
+        }
+      />
     </div>
   );
 }
@@ -139,22 +154,11 @@ type MyContentProps = {
 function MyContent({ user }: MyContentProps) {
   return (
     <div className="mx-auto max-w-2xl">
-      {user ? <SignOutAndListUsers user={user} /> : <LogInHero />}
-    </div>
-  );
-}
-
-function LogInHero() {
-  return (
-    <div className="py-32 sm:py-48 lg:py-56">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-          Wish
-        </h1>
-      </div>
-      <div className="mt-20 flex items-center justify-center gap-x-6">
-        <SignIn />
-      </div>
+      {user ? (
+        <SignOutAndListUsers user={user} />
+      ) : (
+        <HeroContent heroText="Wish" lowerContent={<SignIn />} />
+      )}
     </div>
   );
 }
