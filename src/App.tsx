@@ -21,7 +21,7 @@ import {
   signInWithGoogleAction,
   signOutAction,
 } from "./firebase";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import HeroContent from "./components/HeroContent";
 import Wishes from "./components/Wishes";
 
